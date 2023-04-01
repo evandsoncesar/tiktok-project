@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import VideoFooter from "./components/footer/VideoFooter";
+import VideoSidebar from "./components/sidebar/VideoSidebar";
 import "./Video.css";
 
 function Video() {
@@ -25,7 +26,7 @@ function Video() {
         loop
         src="https://cdn.discordapp.com/attachments/1090396071261372491/1091167951245295667/brecker2.mp4"
       ></video>
-      {/* Side bar */}
+      <VideoSidebar />
       <VideoFooter />
     </div>
   );
