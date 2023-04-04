@@ -1,46 +1,38 @@
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import Video from "./pages/Video";
+import db from "./config/firebase";
+import { collection, getDocs } from "firebase/firestore/lite";
+/* use efect*/
 
 function App() {
+  const [video, setVideos] = useState([]);
+  async function getVideos() {
+    const videosCollection = collection(db, "videos");
+    const videoSnapshot = await getDocs(videosCollection);
+    const videoList = videoSnapshot.docs.map((doc) => doc.data());
+    setVideos(videoList);
+  }
+  useEffect(() => {
+    getVideos();
+  }, []);
+
   return (
     <div className="App">
       <div className="app__videos">
-        <Video
-          likes={100}
-          messages={200}
-          shares={300}
-          name="EvandsonCesar"
-          description="Frajola goleiro"
-          music="Ne-Yo - Because of you"
-          url = "https://cdn.discordapp.com/attachments/1090396071261372491/1091167951245295667/brecker2.mp4"
-        />
-        <Video
-          likes={111}
-          messages={222}
-          shares={333}
-          name="Bruce Wayne"
-          description="Robin goleiro"
-          music="Bruce wayne"
-          url = "https://cdn.discordapp.com/attachments/1090396071261372491/1091167951245295667/brecker2.mp4"
-        />
-        <Video
-          likes={444}
-          messages={111}
-          shares={222}
-          name="Bruce Benner"
-          description="Hulk goleiro"
-          music="Lacrimosa"
-          url = "https://cdn.discordapp.com/attachments/1090396071261372491/1091167951245295667/brecker2.mp4"
-        />
-        <Video
-          likes={123}
-          messages={321}
-          shares={212}
-          name="Cardinot"
-          description="Bronca goleiro"
-          music="Uma mao na AK"
-          url = "https://cdn.discordapp.com/attachments/1090396071261372491/1091167951245295667/brecker2.mp4"
-        />
+        {video.map((item) => {
+          return (
+            <Video
+              likes={item.likes}
+              messages={item.messages}
+              shares={item.shares}
+              name={item.name}
+              description={item.description}
+              music={item.music}
+              url={item.url}
+            />
+          );
+        })}
       </div>
     </div>
   );
