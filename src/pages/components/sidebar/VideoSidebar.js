@@ -1,36 +1,35 @@
 import "./videoSidebar.css";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChatIcon from "@mui/icons-material/Chat";
 import ShareIcon from "@mui/icons-material/Share";
 
-function VideoSidebar() {
+function VideoSidebar({ likes, messages, shares }) {
+  const [liked, setLiked] = useState(false);
 
-   const [liked, setLiked] = useState(false)
-
-   function handdleLike(){
-      setLiked(!liked)
-   }
-
+  function handdleLike() {
+    setLiked(!liked);
+  }
 
   return (
     <div className="videoSidebar">
-      <div 
-         className="videoSidebar__options"
-         onClick={handdleLike}
-      >
-         { liked ? <FavoriteIcon fontSize="large"/>:<FavoriteBorderIcon fontSize="large" />}
-        
-        <p>{liked? 300 +1:300}</p>
+      <div className="videoSidebar__options" onClick={handdleLike}>
+        {liked ? (
+          <FavoriteIcon fontSize="large" />
+        ) : (
+          <FavoriteBorderIcon fontSize="large" />
+        )}
+
+        <p>{liked ? likes + 1 : likes}</p>
       </div>
       <div className="videoSidebar__options">
         <ChatIcon fontSize="large" />
-        <p>200</p>
+        <p>{messages}</p>
       </div>
       <div className="videoSidebar__options">
         <ShareIcon fontSize="large" />
-        <p>100</p>
+        <p>{shares}</p>
       </div>
     </div>
   );
